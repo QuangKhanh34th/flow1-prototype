@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #fffdf7;
+  --color-dark: #23261f;
+  --color-moss: #6d9a73;
+  --color-mint: #86d095;
+  --color-sage: #7fc89e;
+  --shadow-neo: 4px 4px 0px 0px #23261f;
+  --shadow-neo-green: 16px 16px 0px 0px #7fc89e;
+
+  /* Animation utility class: .animate-marquee */
+  --animate-marquee: marquee 30s linear infinite;
+}
+
+/* Base styles for the selection color */
+::selection {
+  background-color: var(--color-mint);
+  color: var(--color-dark);
+}
+
+/* Marquee Keyframes */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    /* Translate exactly half the width to create a seamless loop with duplicated content */
+    transform: translateX(-100%);
+  }
+}
