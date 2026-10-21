@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthModal, type AuthView } from "./AuthModal";
 import { useUserStore } from "../stores/UserStore";
 
@@ -13,6 +14,7 @@ export const CustomerHeader: React.FC<CustomerHeaderProps> = ({
   onOpenCart,
   cartCount = 0,
 }) => {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   
   // Auth Modal State
@@ -32,15 +34,33 @@ export const CustomerHeader: React.FC<CustomerHeaderProps> = ({
     <header className="border-b-2 border-dark bg-cream sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between h-14 px-4">
         <div className="flex items-center gap-4">
-          <div className="bg-moss px-4 py-1.5 text-cream font-bold tracking-wide border-2 border-dark shadow-[2px_2px_0px_0px_#23261F]">
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="bg-moss px-4 py-1.5 text-cream font-bold tracking-wide border-2 border-dark shadow-[2px_2px_0px_0px_#23261F] cursor-pointer"
+          >
             Logo
-          </div>
-          <div className="flex items-center gap-3 text-sm font-medium">
+          </button>
+          <div className="flex items-center gap-4 text-sm font-medium">
             <button
-              onClick={onNavigateToShop}
+              onClick={onNavigateToShop ?? (() => navigate("/"))}
               className="hover:underline flex items-center gap-1 cursor-pointer"
             >
               shop <span className="text-xs">▾</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/commissions")}
+              className="px-2.5 py-0.5 bg-mint hover:bg-sage border-2 border-dark font-extrabold text-xs shadow-[2px_2px_0px_0px_#23261F] cursor-pointer"
+            >
+              ✨ custom design (Flow 3)
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard/staff/designs")}
+              className="hidden sm:inline-block px-2 py-0.5 bg-white hover:bg-sage/40 border border-dark font-mono font-bold text-xs cursor-pointer"
+            >
+              🛠 staff / designer portal
             </button>
             <a href="#about" className="hover:underline">about</a>
           </div>
