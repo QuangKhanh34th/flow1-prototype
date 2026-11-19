@@ -9,6 +9,7 @@ import { StaffLoginPage } from "./pages/staff/StaffLoginPage";
 import { OrdersManagementPage } from "./pages/staff/OrdersManagementPage";
 import { DesignRequestsPage } from "./pages/staff/DesignRequestsPage";
 import { DesignerWorkspacePage } from "./pages/staff/DesignerWorkspacePage";
+import { AdminFirmwarePage } from "./pages/staff/AdminFirmwarePage";
 
 export default function App() {
   return (
@@ -23,13 +24,14 @@ export default function App() {
         {/* Customer Custom Character Commissions (Flow 3) */}
         <Route path="/commissions" element={<CustomerCommissionsPage />} />
 
-        {/* Internal Staff & Designer Portal (Flow 1 & Flow 3) */}
+        {/* Internal Staff, Designer & System Admin Portal (Flow 1, Flow 3 & Flow 4 Firmware OTA) */}
         <Route path="/dashboard/staff/login" element={<StaffLoginPage />} />
         <Route path="/dashboard/staff" element={<StaffLayout />}>
           <Route index element={<DesignRequestsPage />} />
           <Route path="orders" element={<OrdersManagementPage />} />
           <Route path="designs" element={<DesignRequestsPage />} />
           <Route path="designer" element={<DesignerWorkspacePage />} />
+          <Route path="firmware" element={<AdminFirmwarePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

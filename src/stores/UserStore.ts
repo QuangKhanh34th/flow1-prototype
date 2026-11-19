@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type UserRole = "CUSTOMER" | "STAFF" | "DESIGNER";
+export type UserRole = "CUSTOMER" | "STAFF" | "DESIGNER" | "ADMIN";
 
 interface UserStore {
   isAuthenticated: boolean;
@@ -17,6 +17,7 @@ const ROLE_PROFILES: Record<UserRole, { userId: string; userName: string }> = {
   CUSTOMER: { userId: "cus-01", userName: "Nguyen Quang Khanh (Customer)" },
   STAFF: { userId: "staff-01", userName: "Pham Tran Trung Hieu (Staff)" },
   DESIGNER: { userId: "des-01", userName: "Le Hoang Tuan (Designer)" },
+  ADMIN: { userId: "adm-01", userName: "Tran Duc Hai (System Admin)" },
 };
 
 export const useUserStore = create<UserStore>()(

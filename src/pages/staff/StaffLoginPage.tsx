@@ -11,11 +11,18 @@ export const StaffLoginPage: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<UserRole>("STAFF");
   const navigate = useNavigate();
 
-  if (isAuthenticated && (currentRole === "STAFF" || currentRole === "DESIGNER")) {
+  if (
+    isAuthenticated &&
+    (currentRole === "STAFF" ||
+      currentRole === "DESIGNER" ||
+      currentRole === "ADMIN")
+  ) {
     return (
       <Navigate
         to={
-          currentRole === "DESIGNER"
+          currentRole === "ADMIN"
+            ? "/dashboard/staff/firmware"
+            : currentRole === "DESIGNER"
             ? "/dashboard/staff/designer"
             : "/dashboard/staff/designs"
         }
@@ -28,7 +35,9 @@ export const StaffLoginPage: React.FC = () => {
     e.preventDefault();
     login(selectedRole);
     navigate(
-      selectedRole === "DESIGNER"
+      selectedRole === "ADMIN"
+        ? "/dashboard/staff/firmware"
+        : selectedRole === "DESIGNER"
         ? "/dashboard/staff/designer"
         : "/dashboard/staff/designs"
     );
@@ -47,7 +56,7 @@ export const StaffLoginPage: React.FC = () => {
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-1">
               <label className="text-xs font-bold text-dark">Select Internal Role</label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 <button
                   type="button"
                   onClick={() => setSelectedRole("STAFF")}
@@ -57,7 +66,7 @@ export const StaffLoginPage: React.FC = () => {
                       : "bg-white"
                   }`}
                 >
-                  🛠 Staff Coordinator
+                  🛠 Staff
                 </button>
                 <button
                   type="button"
@@ -68,7 +77,18 @@ export const StaffLoginPage: React.FC = () => {
                       : "bg-white"
                   }`}
                 >
-                  🎨 Pixel Designer
+                  🎨 Designer
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedRole("ADMIN")}
+                  className={`py-2 border-2 border-dark text-xs font-extrabold cursor-pointer ${
+                    selectedRole === "ADMIN"
+                      ? "bg-mint shadow-[2px_2px_0px_0px_#23261F]"
+                      : "bg-white"
+                  }`}
+                >
+                  🔐 Admin
                 </button>
               </div>
             </div>
@@ -78,8 +98,11 @@ export const StaffLoginPage: React.FC = () => {
               <div className="flex bg-white border-2 border-dark h-10 px-2 items-center shadow-[2px_2px_0px_0px_#23261F]">
                 <input
                   type="text"
+                  key={selectedRole}
                   defaultValue={
-                    selectedRole === "STAFF"
+                    selectedRole === "ADMIN"
+                      ? "haitd.admin@lumintra.shop"
+                      : selectedRole === "STAFF"
                       ? "hieuptt.staff@ledwindshield.vn"
                       : "tuanlh.designer@ledwindshield.vn"
                   }
@@ -105,7 +128,13 @@ export const StaffLoginPage: React.FC = () => {
               type="submit"
               className="w-full py-2.5 mt-4 bg-sage hover:bg-mint border-2 border-dark font-extrabold text-xs shadow-[2px_2px_0px_0px_#23261F] transition-transform active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
             >
-              Access {selectedRole === "STAFF" ? "Staff" : "Designer"} Terminal &rarr;
+              Access{" "}
+              {selectedRole === "ADMIN"
+                ? "System Admin"
+                : selectedRole === "STAFF"
+                ? "Staff"
+                : "Designer"}{" "}
+              Terminal &rarr;
             </button>
           </form>
         </div>

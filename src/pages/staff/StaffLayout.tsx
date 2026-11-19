@@ -3,6 +3,7 @@ import { Navigate, Outlet, Link, useLocation, useNavigate } from "react-router-d
 import { useUserStore } from "../../stores/UserStore";
 import { RetroWindow } from "../../components/RetroWindow";
 import { useCommissionStore } from "../../stores/CommissionStore";
+import { useFirmwareStore } from "../../stores/FirmwareStore";
 
 export const StaffLayout: React.FC = () => {
   const isAuthenticated = useUserStore((state) => state.isAuthenticated);
@@ -11,6 +12,7 @@ export const StaffLayout: React.FC = () => {
   const switchRole = useUserStore((state) => state.switchRole);
   const logout = useUserStore((state) => state.logout);
   const commissions = useCommissionStore((state) => state.commissions);
+  const releases = useFirmwareStore((state) => state.releases);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -27,6 +29,8 @@ export const StaffLayout: React.FC = () => {
   const pendingDesignerCount = commissions.filter((c) =>
     ["IN_PROGRESS", "INTERNAL_REVISION_REQUIRED"].includes(c.status)
   ).length;
+
+  const activeFirmwareCount = releases.filter((r) => r.status === "ACTIVE").length;
 
   return (
     <div className="min-h-screen bg-cream flex flex-col md:flex-row p-4 gap-6 font-mono text-dark">
@@ -89,6 +93,21 @@ export const StaffLayout: React.FC = () => {
                   {pendingDesignerCount}
                 </span>
               )}
+            </Link>
+
+            <Link
+              to="/dashboard/staff/firmware"
+              onClick={() => switchRole("ADMIN")}
+              className={`flex items-center justify-between px-3 py-2 border-2 border-dark font-bold hover:bg-mint transition-colors ${
+                location.pathname.includes("/firmware")
+                  ? "bg-mint shadow-[2px_2px_0px_0px_#23261F]"
+                  : "bg-white"
+              }`}
+            >
+              <span>📡 Firmware OTA (Admin)</span>
+              <span className="bg-dark text-mint px-1.5 py-0.2 text-[10px] font-extrabold">
+                {activeFirmwareCount}
+              </span>
             </Link>
 
             <div className="pt-4 border-t border-dark/20 space-y-2">

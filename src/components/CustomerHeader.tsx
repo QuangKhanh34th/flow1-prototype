@@ -62,6 +62,16 @@ export const CustomerHeader: React.FC<CustomerHeaderProps> = ({
             >
               🛠 staff / designer portal
             </button>
+            <button
+              type="button"
+              onClick={() => {
+                useUserStore.getState().switchRole("ADMIN");
+                navigate("/dashboard/staff/firmware");
+              }}
+              className="hidden sm:inline-block px-2.5 py-0.5 bg-sage hover:bg-mint border-2 border-dark font-mono font-extrabold text-xs shadow-[2px_2px_0px_0px_#23261F] cursor-pointer"
+            >
+              📡 firmware OTA (Admin)
+            </button>
             <a href="#about" className="hover:underline">about</a>
           </div>
         </div>
